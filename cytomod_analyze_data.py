@@ -69,6 +69,7 @@ Arguments to be manually defined:
         Seed for random numbers stream set before cytomod calculations.
 
 The code was written using the Anaconda3 Python interpreter and packages.
+Recommended versions: Python 3.7.1, Pandas 0.23.4, Numpy 1.16.2
 The palettable module (https://pypi.org/project/palettable/) must also be installed.
 use: pip install palettable
 '''
@@ -87,6 +88,7 @@ from cytomod import plotting as cyplot
 from hclusterplot import plotHColCluster
 import tools
 import numpy as np
+import random
 
 ########### ------------------- Define manual arguments ----------------- ###########
 
@@ -187,7 +189,6 @@ if do_recalculate:
     random.seed(args.seed)
     cyto_mod_adj = cytomod.cytomod_class(args.name_data, args.name_compartment, True, cy_data)
     cyto_mod_abs = cytomod.cytomod_class(args.name_data, args.name_compartment, False, cy_data)
-    cyto_modules = {'adj': cyto_mod_adj, 'abs': cyto_mod_abs}
 
     bestK = {}
     bestK['adj'] = gap_stat.getBestK(cyto_mod_adj.cyDf,
@@ -276,7 +277,7 @@ if args.outcomes != []:
                         standardize=True)
 
 
-    ########### ------------ Output Figures and Tables ------------- ###########
+    ########### ------------ Output Figures ------------- ###########
 
     #### Absolute
     outcome.plotResultSummary(cyto_modules['abs'],
@@ -297,3 +298,29 @@ if args.outcomes != []:
                               compartmentName=args.name_compartment,
                               figsize=(6,9),
                               save_fig_path=os.path.join(args.paths['association_figures'], 'associations_adj.png'))
+
+    ########### ------------ Output Tables ------------- ###########
+
+    # Adjusted modules
+    outcome.printTable(mod_outcome_adj_df,
+                       title=args.name_compartment + ' (Adjusted)',
+                       fdr_output_limit=1, fwer_output_limit=1, pval_output_limit=1,
+                       output_file_path=os.path.join(args.paths['association_figures'], 'associations_adj_mod_pvals.pdf'))
+
+    # Absolute modules
+    outcome.printTable(mod_outcome_abs_df,
+                       title=args.name_compartment + ' (Absolute)',
+                       fdr_output_limit=1, fwer_output_limit=1, pval_output_limit=1,
+                       output_file_path=os.path.join(args.paths['association_figures'], 'associations_abs_mod_pvals.pdf'))
+
+    # Adjusted cytokines
+    outcome.printTable(cy_outcome_adj_df,
+                       title=args.name_compartment + ' (Adjusted)',
+                       fdr_output_limit=1, fwer_output_limit=1, pval_output_limit=1,
+                       output_file_path=os.path.join(args.paths['association_figures'], 'associations_adj_cy_pvals.pdf'))
+
+    # Absolute cytokines
+    outcome.printTable(cy_outcome_abs_df,
+                       title=args.name_compartment + ' (Absolute)',
+                       fdr_output_limit=1, fwer_output_limit=1, pval_output_limit=1,
+                       output_file_path=os.path.join(args.paths['association_figures'], 'associations_abs_cy_pvals.pdf'))

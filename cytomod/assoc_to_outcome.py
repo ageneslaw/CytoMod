@@ -1,9 +1,4 @@
 import os.path as op
-
-# import plotting as cyplot
-# from biplot import biplot
-# import plotting as cyplot
-# import cycluster as cy
 import matplotlib.pyplot as plt
 import scipy.stats.stats
 import numpy as np
@@ -12,9 +7,6 @@ import itertools
 import seaborn as sns
 import statsmodels as sm
 
-# sys.path.append('C:/Users/liel-/PycharmProjects/LielTools/')
-# from write2Excel import writeDF2Excel
-# from dillReadWrite import writeDf2Dill
 
 sns.set(style='darkgrid', font_scale=1.5, palette='muted')
 
@@ -26,6 +18,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
+from dfprint import toPDF, greek2latex
 
 sns.set(style='darkgrid', palette='muted', font_scale=2.0)
 
@@ -228,3 +221,66 @@ def plotResultSummary(cytomod_obj,
         plt.show()
     else:
         plt.savefig(save_fig_path)
+
+
+''' Print association pvalues table to file and/or console.
+    @ output_file_path possible file types: pdf, csv. 
+      *If None - no file will be saved. 
+      *for pdf, will also write .tex files.
+    @ fdr_output_limit / fwer_output_limit / pval_output_limit:
+    function only writes modules/cytokines with values under these limits.'''
+def printTable(assoc_res_df, title='', output_file_path=None, print_to_console=False,
+               fdr_output_limit=1, fwer_output_limit=1, pval_output_limit=1):
+
+    resDf = assoc_res_df.copy()
+
+    # define columns to be written to file
+    if 'Module' in resDf.columns:
+        cols = ['Outcome', 'Module', 'OR', 'pvalue', 'FWER', 'FDR']
+    elif 'Analyte' in resDf.columns:
+        cols = ['Outcome', 'Analyte', 'OR', 'pvalue', 'FWER', 'FDR']
+    else:
+        raise Exception('printTable: assoc_res_df format error: '
+                        'must contain column Module or Analyte')
+
+    # get adjusted pvalues
+    resDf['FWER'] = sm.stats.multipletests(resDf.pvalue.values, method='holm')[1]
+    resDf['FDR'] = sm.stats.multipletests(resDf.pvalue.values, method='fdr_bh')[1]
+
+    # Get relevant rows by value limits defined
+    ind = (resDf['FDR'] <= fdr_output_limit) & \
+          (resDf['FWER'] <= fwer_output_limit) & \
+          (resDf['pvalue'] <= pval_output_limit)
+
+    # print tables to console
+    if print_to_console:
+        print('\n' + title)
+        print('==================================')
+        float_format = lambda f: '%1.2g' % f
+        print(resDf[cols].loc[ind].sort_values(by='pvalue').to_string(float_format=float_format))
+
+    # change greek letters format for files
+    if 'Analyte' in resDf.columns:
+        resDf['Analyte'] = resDf['Analyte'].map(greek2latex)
+
+    # output tables to files
+    if output_file_path[-3:] == 'pdf':
+
+        # write pdf and tex files
+        toPDF(resDf[cols].loc[ind].sort_values(by='pvalue'),
+              output_file_path,
+              titStr=title,
+              float_format='%1.3g')
+
+    elif output_file_path[-3:] == 'csv':
+        # write csv file
+        resDf[cols].loc[ind].sort_values(by='pvalue').to_csv(output_file_path,
+                                                             index=False,
+                                                             float_format='%1.3g')
+
+    elif output_file_path is None:
+        pass  # do nothing
+
+    else:
+        raise Exception('printTable: unknown output file format.')
+

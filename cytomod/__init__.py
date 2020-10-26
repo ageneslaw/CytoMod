@@ -25,7 +25,6 @@ from . import assoc_to_outcome
 from . import run_gap_statistic
 
 __all__ = ['preprocessing',
-           # 'computeGapStat',
            'plotting',
            'comparison',
            'io',
