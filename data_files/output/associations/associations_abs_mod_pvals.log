@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=latex 2018.9.20)  26 OCT 2020 12:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=latex 2018.9.20)  8 NOV 2020 11:28
 entering extended mode
 **C:/Users/liel-/Dropbox/PyCharm/PycharmProjectsNew/CytoMod_git/data_files/outp
 ut/associations/associations_abs_mod_pvals.tex
@@ -544,7 +544,7 @@ t\associations\associations_abs_mod_pvals.aux) )
 Here is how much of TeX's memory you used:
  1808 strings out of 493324
  23698 string characters out of 3139092
- 90949 words of memory out of 3000000
+ 90948 words of memory out of 3000000
  5360 multiletter control sequences out of 15000+200000
  6583 words of font info for 15 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -553,7 +553,7 @@ Here is how much of TeX's memory you used:
 nts/enc/dvips/lm/lm-rm.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/l
 mr10.pfb>
 Output written on C:\Users\liel-\Dropbox\PyCharm\PycharmProjectsNew\CytoMod_git
-\data_files\output\associations\associations_abs_mod_pvals.pdf (1 page, 31206 b
+\data_files\output\associations\associations_abs_mod_pvals.pdf (1 page, 31604 b
 ytes).
 PDF statistics:
  11 PDF objects out of 1000 (max. 8388607)

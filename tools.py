@@ -32,9 +32,9 @@ def assert_column_exists_in_path(file_path, col_name, sheet=0):
     df = read_excel(file_path, sheet=sheet, nrows=3)
 
     if col_name not in df.columns:
-        print('Column', col_name, 'does not exist')
-        print('in file', file_path, '.')
-        raise Exception('assert_column_exists_in_path: Fix column name and re-run script.')
+        str_print = 'Column ' + col_name + ' does not exist in file ' + file_path + '.\n'
+        str_print += 'Fix column name and re-run script.'
+        raise Exception(str_print)
 
 def write_to_dill(path, variable):
     with open(path, 'wb') as d:
