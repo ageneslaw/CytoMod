@@ -75,7 +75,11 @@ def plot_modules(clust_object, folder):
     """Cytokine embedding"""
     plt.figure(901, figsize=(13, 9.7))
     cyplot.plotModuleEmbedding(clust_object.dmatDf, clust_object.labels, method='kpca')
-    colors = palettable.colorbrewer.get_map('Set1', 'qualitative', len(np.unique(clust_object.labels))).mpl_colors
+    if len(np.unique(clust_object.labels)) > 2:
+        colors = palettable.colorbrewer.get_map('Set1', 'qualitative', len(np.unique(clust_object.labels))).mpl_colors
+    else:
+        colors = [(0.8941176470588236, 0.10196078431372549, 0.10980392156862745),
+                   (0.21568627450980393, 0.49411764705882355, 0.7215686274509804)]
     colorLegend(colors, ['%s%1.0f' % (clust_object.sampleStr, i) for i in np.unique(clust_object.labels)],
                 loc='lower left')
     plt.figure(901).savefig(os.path.join(folder, '%sembed.png' % clust_object.name), dpi=300)
@@ -121,7 +125,11 @@ def plot_modules(clust_object, folder, heatmap_figsize=(15.5, 9.5)):
     """Cytokine embedding"""
     plt.figure(901, figsize=(13, 9.7))
     cyplot.plotModuleEmbedding(clust_object.dmatDf, clust_object.labels, method='kpca')
-    colors = palettable.colorbrewer.get_map('Set1', 'qualitative', len(np.unique(clust_object.labels))).mpl_colors
+    if len(np.unique(clust_object.labels)) > 2:
+        colors = palettable.colorbrewer.get_map('Set1', 'qualitative', len(np.unique(clust_object.labels))).mpl_colors
+    else:
+        colors = [(0.8941176470588236, 0.10196078431372549, 0.10980392156862745),
+                   (0.21568627450980393, 0.49411764705882355, 0.7215686274509804)]
     colorLegend(colors, ['%s%1.0f' % (clust_object.sampleStr, i) for i in np.unique(clust_object.labels)],
                 loc='lower left')
     plt.figure(901).savefig(os.path.join(folder, '%s_embedding.png' % clust_object.name), dpi=300)
@@ -172,7 +180,11 @@ def plot_cy_embedding(clust_object, folder):
     """Cytokine embedding"""
     plt.figure(901, figsize=(13, 9.7))
     cyplot.plotModuleEmbedding(clust_object.dmatDf, clust_object.labels, method='kpca')
-    colors = palettable.colorbrewer.get_map('Set1', 'qualitative', len(np.unique(clust_object.labels))).mpl_colors
+    if len(np.unique(clust_object.labels)) > 2:
+        colors = palettable.colorbrewer.get_map('Set1', 'qualitative', len(np.unique(clust_object.labels))).mpl_colors
+    else:
+        colors = [(0.8941176470588236, 0.10196078431372549, 0.10980392156862745),
+                   (0.21568627450980393, 0.49411764705882355, 0.7215686274509804)]
     colorLegend(colors, ['%s%1.0f' % (clust_object.sampleStr, i) for i in np.unique(clust_object.labels)],
                 loc='lower left')
     plt.figure(901).savefig(os.path.join(folder, '%s_embedding.png' % clust_object.name), dpi=300)

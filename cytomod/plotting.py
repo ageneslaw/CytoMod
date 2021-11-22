@@ -57,7 +57,11 @@ def plotModuleEmbedding(dmatDf, labels, dropped=None, method='kpca', plotLabels=
         tsneObj = TSNE(n_components=n_components, metric='precomputed', random_state=0)
         xy = tsneObj.fit_transform(dmat)
 
-    colors = palettable.colorbrewer.get_map('Set1', 'qualitative', len(uLabels)).mpl_colors
+    if len(uLabels) > 2:
+        colors = palettable.colorbrewer.get_map('Set1', 'qualitative', len(uLabels)).mpl_colors
+    else:
+        colors = [(0.5529411764705883, 0.8274509803921568, 0.7803921568627451),
+                  (1.0, 1.0, 0.7019607843137254)]
     figh = plt.gcf()
     figh.clf()
     axh = figh.add_axes([0.03, 0.03, 0.94, 0.94])
@@ -398,8 +402,12 @@ def cyNHeatmap(cyDf):
 def _colors2labels(labels, setStr = 'Set3', cmap = None):
     """Return pd.Series of colors based on labels"""
     if cmap is None:
-        N = max(3, min(12, len(np.unique(labels))))
-        cmap = palettable.colorbrewer.get_map(setStr, 'Qualitative', N).mpl_colors
+        if len(np.unique(labels)) > 2:
+            N = max(3, min(12, len(np.unique(labels))))
+            cmap = palettable.colorbrewer.get_map(setStr, 'Qualitative', N).mpl_colors
+        else:
+            cmap = [(0.5529411764705883, 0.8274509803921568, 0.7803921568627451),
+                    (1.0, 1.0, 0.7019607843137254)]
     cmapLookup = {k:col for k, col in zip(sorted(np.unique(labels)), itertools.cycle(cmap))}
     return labels.map(cmapLookup.get)
 
