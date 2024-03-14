@@ -7,7 +7,7 @@ import palettable
 import pandas as pd
 import scipy.spatial.distance as distance
 import scipy.cluster.hierarchy as sch
-from sklearn.cluster.bicluster import SpectralBiclustering, SpectralCoclustering
+from sklearn.cluster import SpectralBiclustering, SpectralCoclustering
 import numpy as np
 import itertools
 

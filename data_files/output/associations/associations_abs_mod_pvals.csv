@@ -1,0 +1,10 @@
+Outcome,Module,OR,pvalue,FWER,FDR
+RespiratoryFailure,All3,0.279,0.000186,0.00167,0.00167
+RespiratoryFailure,All1,15.4,0.000401,0.00321,0.00181
+Infected,All3,0.41,0.0225,0.158,0.0676
+Infected,All1,12.2,0.0353,0.212,0.0795
+COVID19,All2,2,0.109,0.545,0.196
+RespiratoryFailure,All2,1.36,0.148,0.59,0.217
+COVID19,All1,1.39,0.169,0.59,0.217
+Infected,All2,1.46,0.337,0.675,0.379
+COVID19,All3,0.894,0.634,0.675,0.634
